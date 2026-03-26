@@ -1,7 +1,7 @@
 const PRODUCTS = [
   {
     id: "dhartigold",
-    qrCode: "https://yoursite.com/product/dhartigold",
+    qrCode: "https://nandinicropcarepvtlimited.netlify.app/product/dhartigold",
     image: "https://res.cloudinary.com/dkjz3ivtx/image/upload/v1773586081/DhartiGoldUltra_qsenev.jpg",
     imageAlt: "Dharti Gold Ultra — Auxin-based root initiation product",
     cardGradient: "linear-gradient(135deg, #b5e7a0, #4e9e42)",
