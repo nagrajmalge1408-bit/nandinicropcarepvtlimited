@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Product Details | Nandini Crop Care</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <script src="products%20(2).js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: linear-gradient(135deg, #e8f5e2 0%, #c8e6c0 100%);
+      color: #1a2d1c;
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 16px rgba(44, 106, 53, 0.1);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header a {
+      color: #6aab5e;
+      text-decoration: none;
+      font-weight: 600;
+      transition: color 0.3s;
+    }
+
+    header a:hover {
+      color: #2d6a35;
+    }
+
+    .product-hero {
+      background: white;
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(44, 106, 53, 0.15);
+      margin-bottom: 30px;
+    }
+
+    .product-header {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      padding: 40px;
+      align-items: center;
+    }
+
+    .product-image {
+      text-align: center;
+    }
+
+    .product-image img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 12px;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-info h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: 36px;
+      color: #2d6a35;
+      margin-bottom: 10px;
+    }
+
+    .category {
+      display: inline-block;
+      background: #a8d85e;
+      color: #1a2d1c;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 600;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .tagline {
+      font-size: 18px;
+      color: #3d5940;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .description {
+      background: #f9f9f9;
+      padding: 20px;
+      border-left: 4px solid #6aab5e;
+      border-radius: 8px;
+      color: #555;
+      margin-bottom: 20px;
+    }
+
+    .sections {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+      padding: 40px;
+      background: white;
+    }
+
+    .section h2 {
+      font-size: 20px;
+      color: #2d6a35;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #a8d85e;
+      padding-bottom: 10px;
+    }
+
+    .section ul {
+      list-style: none;
+      margin: 0;
+    }
+
+    .section li {
+      padding: 10px 0;
+      padding-left: 25px;
+      position: relative;
+      color: #555;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .section li:last-child {
+      border-bottom: none;
+    }
+
+    .section li:before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: #6aab5e;
+      font-weight: bold;
+      font-size: 16px;
+    }
+
+    .dosage-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 15px;
+    }
+
+    .dosage-table th, .dosage-table td {
+      padding: 10px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+
+    .dosage-table th {
+      background: #e8f5e2;
+      font-weight: 600;
+      color: #2d6a35;
+    }
+
+    .dosage-table td {
+      color: #555;
+    }
+
+    .crops-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 10px;
+      margin-top: 15px;
+    }
+
+    .crop-tag {
+      background: #e8f5e2;
+      color: #2d6a35;
+      padding: 8px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      text-align: center;
+      border: 1px solid #d0ecc5;
+    }
+
+    .warning {
+      background: #fff3cd;
+      border-left: 4px solid #ffc107;
+      padding: 20px;
+      border-radius: 8px;
+      margin: 30px 0;
+    }
+
+    .warning h3 {
+      color: #856404;
+      margin-bottom: 10px;
+    }
+
+    .warning p {
+      color: #856404;
+      line-height: 1.6;
+    }
+
+    .specs {
+      background: white;
+      padding: 30px;
+      border-radius: 12px;
+      margin-bottom: 30px;
+      box-shadow: 0 4px 16px rgba(44, 106, 53, 0.1);
+    }
+
+    .specs h2 {
+      font-size: 20px;
+      color: #2d6a35;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #a8d85e;
+      padding-bottom: 10px;
+    }
+
+    .specs-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .spec-item {
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 3px solid #6aab5e;
+    }
+
+    .spec-label {
+      font-size: 12px;
+      color: #999;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 5px;
+    }
+
+    .spec-value {
+      font-size: 16px;
+      color: #2d6a35;
+      font-weight: 600;
+    }
+
+    .error {
+      background: white;
+      padding: 40px;
+      text-align: center;
+      border-radius: 12px;
+      margin: 40px 0;
+      box-shadow: 0 4px 16px rgba(44, 106, 53, 0.1);
+    }
+
+    .error h2 {
+      color: #d32f2f;
+      margin-bottom: 15px;
+    }
+
+    .error p {
+      color: #666;
+      margin-bottom: 20px;
+    }
+
+    .btn {
+      display: inline-block;
+      background: #6aab5e;
+      color: white;
+      padding: 12px 30px;
+      border-radius: 6px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: all 0.3s;
+    }
+
+    .btn:hover {
+      background: #2d6a35;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(106, 171, 94, 0.3);
+    }
+
+    .qr-section {
+      text-align: center;
+      padding: 30px;
+      background: #f9f9f9;
+      border-radius: 12px;
+      margin: 30px 0;
+    }
+
+    .qr-section h3 {
+      color: #2d6a35;
+      margin-bottom: 15px;
+    }
+
+    .qr-section img {
+      max-width: 200px;
+      height: auto;
+    }
+
+    @media (max-width: 768px) {
+      .product-header {
+        grid-template-columns: 1fr;
+        gap: 20px;
+        padding: 20px;
+      }
+
+      .sections {
+        grid-template-columns: 1fr;
+        padding: 20px;
+      }
+
+      .product-info h1 {
+        font-size: 28px;
+      }
+
+      header {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>← <a href="nag.html">Back to Products</a></div>
+      <h1 style="font-family: 'Playfair Display', serif; color: #2d6a35;">Nandini Crop Care</h1>
+      <div></div>
+    </header>
+
+    <div id="product-content">
+      <div style="text-align: center; padding: 40px;">
+        <p style="color: #999;">Loading product details...</p>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      loadProductDetails();
+    });
+
+    function loadProductDetails() {
+      if (typeof PRODUCTS === 'undefined') {
+        showError('Products data not available');
+        return;
+      }
+
+      // Get product ID from URL parameters
+      const params = new URLSearchParams(window.location.search);
+      const productId = params.get('id') || extractProductIdFromPath();
+
+      if (!productId) {
+        showError('No product specified');
+        return;
+      }
+
+      // Find product
+      const product = PRODUCTS.find(p => p.id === productId);
+
+      if (!product || !product.id) {
+        showError(`Product "${productId}" not found`);
+        return;
+      }
+
+      displayProduct(product);
+    }
+
+    function extractProductIdFromPath() {
+      // Extract from URL like: /product/dhartigold
+      const path = window.location.pathname;
+      const match = path.match(/product\/([^\/]+)/);
+      return match ? match[1] : null;
+    }
+
+    function displayProduct(product) {
+      const content = document.getElementById('product-content');
+      let html = `
+        <div class="product-hero">
+          <div class="product-header">
+            <div class="product-image">
+              <img src="${product.image}" alt="${product.imageAlt || product.name}">
+            </div>
+            <div class="product-info">
+              <div class="category">${product.category}</div>
+              <h1>${product.name}</h1>
+              <div class="tagline">${product.tagline}</div>
+              <div class="description">${product.description}</div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Specs section
+      if (product.specs && product.specs.length > 0) {
+        html += `
+          <div class="specs">
+            <h2>Technical Specifications</h2>
+            <div class="specs-grid">
+              ${product.specs.map(spec => `
+                <div class="spec-item">
+                  <div class="spec-value">${spec}</div>
+                </div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      html += `<div class="sections">`;
+
+      // Benefits
+      if (product.benefits && product.benefits.length > 0) {
+        html += `
+          <div class="section">
+            <h2>Key Benefits</h2>
+            <ul>
+              ${product.benefits.map(benefit => {
+                const cleanBenefit = benefit.replace(/<\/?ln>/g, '').replace(/<\/?strong>/g, '');
+                return `<li>${cleanBenefit}</li>`;
+              }).join('')}
+            </ul>
+          </div>
+        `;
+      }
+
+      // Crops
+      if (product.crops && product.crops.length > 0) {
+        html += `
+          <div class="section">
+            <h2>Suitable Crops</h2>
+            <div class="crops-grid">
+              ${product.crops.map(crop => `
+                <div class="crop-tag">${crop}</div>
+              `).join('')}
+            </div>
+          </div>
+        `;
+      }
+
+      html += `</div>`;
+
+      // Dosage
+      if (product.dosage && product.dosage.length > 0) {
+        html += `
+          <div style="background: white; padding: 30px; border-radius: 12px; margin-bottom: 30px; box-shadow: 0 4px 16px rgba(44, 106, 53, 0.1);">
+            <h2 style="font-size: 20px; color: #2d6a35; margin-bottom: 15px; border-bottom: 2px solid #a8d85e; padding-bottom: 10px;">Recommended Dosage</h2>
+            <table class="dosage-table">
+              <thead>
+                <tr>
+                  <th>Application Type</th>
+                  <th>Dosage</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${product.dosage.map(dose => `
+                  <tr>
+                    <td>${dose[0].replace(/<\/?ln>/g, '')}</td>
+                    <td>${dose[1].replace(/<\/?ln>/g, '')}</td>
+                  </tr>
+                `).join('')}
+              </tbody>
+            </table>
+          </div>
+        `;
+      }
+
+      // Warning
+      if (product.warning) {
+        html += `
+          <div class="warning">
+            <h3>⚠️ Important Safety Information</h3>
+            <p>${product.warning}</p>
+          </div>
+        `;
+      }
+
+      // QR Code
+      if (product.qrCode) {
+        const qrUrl = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=${encodeURIComponent(product.qrCode)}&format=png`;
+        html += `
+          <div class="qr-section">
+            <h3>Share This Product</h3>
+            <p style="color: #999; margin-bottom: 15px;">Scan this QR code to view full product details</p>
+            <img src="${qrUrl}" alt="Product QR Code">
+            <p style="color: #999; font-size: 12px; margin-top: 15px;">Product ID: <strong>${product.id}</strong></p>
+          </div>
+        `;
+      }
+
+      content.innerHTML = html;
+      document.title = `${product.name} | Nandini Crop Care`;
+    }
+
+    function showError(message) {
+      const content = document.getElementById('product-content');
+      content.innerHTML = `
+        <div class="error">
+          <h2>Product Not Found</h2>
+          <p>${message}</p>
+          <a href="nag.html" class="btn">← Back to Products</a>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

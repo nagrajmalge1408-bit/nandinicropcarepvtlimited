@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Print Product QR Codes | Nandini Crop Care</title>
+  <script src="products%20(2).js"></script>
+  <script src="qrCodePrint.js"></script>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'DM Sans', Arial, sans-serif;
+      background: linear-gradient(135deg, #e8f5e2 0%, #c8e6c0 100%);
+      padding: 20px;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(44, 106, 53, 0.15);
+      overflow: hidden;
+    }
+    
+    .header {
+      background: linear-gradient(135deg, #2d6a35 0%, #6aab5e 100%);
+      color: white;
+      padding: 40px 20px;
+      text-align: center;
+    }
+    
+    .header h1 {
+      font-size: 32px;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+    
+    .header p {
+      font-size: 16px;
+      opacity: 0.9;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+    
+    .controls {
+      padding: 20px;
+      background: #f9f9f9;
+      border-bottom: 1px solid #e0e0e0;
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    
+    .btn {
+      padding: 12px 24px;
+      border: none;
+      border-radius: 6px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: inline-block;
+    }
+    
+    .btn-primary {
+      background: #6aab5e;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background: #2d6a35;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(106, 171, 94, 0.3);
+    }
+    
+    .btn-secondary {
+      background: #e8f5e2;
+      color: #2d6a35;
+      border: 2px solid #6aab5e;
+    }
+    
+    .btn-secondary:hover {
+      background: #d0ecc5;
+      transform: translateY(-2px);
+    }
+    
+    .btn-small {
+      padding: 8px 16px;
+      font-size: 12px;
+    }
+    
+    .content {
+      padding: 30px 20px;
+    }
+    
+    .section {
+      margin-bottom: 40px;
+    }
+    
+    .section h2 {
+      color: #2d6a35;
+      margin-bottom: 20px;
+      font-size: 22px;
+      padding-bottom: 10px;
+      border-bottom: 2px solid #a8d85e;
+    }
+    
+    .qr-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 20px;
+    }
+    
+    .qr-card {
+      border: 2px solid #d0d0d0;
+      border-radius: 8px;
+      padding: 15px;
+      text-align: center;
+      background: #fafafa;
+      transition: all 0.3s ease;
+      page-break-inside: avoid;
+    }
+    
+    .qr-card:hover {
+      border-color: #6aab5e;
+      box-shadow: 0 4px 12px rgba(106, 171, 94, 0.2);
+      transform: translateY(-2px);
+    }
+    
+    .qr-card img {
+      width: 150px;
+      height: 150px;
+      margin-bottom: 10px;
+      border-radius: 4px;
+      background: white;
+      padding: 5px;
+    }
+    
+    .qr-card .product-name {
+      font-weight: 600;
+      color: #2d6a35;
+      margin-bottom: 8px;
+      font-size: 14px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    
+    .qr-card .product-id {
+      color: #999;
+      font-size: 12px;
+      margin-bottom: 12px;
+    }
+    
+    .qr-card .btn-group {
+      display: flex;
+      gap: 5px;
+    }
+    
+    .qr-card .btn-group .btn {
+      flex: 1;
+      font-size: 11px;
+      padding: 6px 10px;
+    }
+    
+    .instructions {
+      background: #f0f8f0;
+      border-left: 4px solid #6aab5e;
+      padding: 15px;
+      border-radius: 4px;
+      margin-bottom: 20px;
+    }
+    
+    .instructions h3 {
+      color: #2d6a35;
+      margin-bottom: 10px;
+    }
+    
+    .instructions ol {
+      margin-left: 20px;
+      color: #555;
+      line-height: 1.6;
+    }
+    
+    .instructions li {
+      margin-bottom: 8px;
+    }
+    
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+      margin-bottom: 30px;
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, #e8f5e2 0%, #d0ecc5 100%);
+      border-left: 4px solid #6aab5e;
+      padding: 15px;
+      border-radius: 6px;
+      text-align: center;
+    }
+    
+    .stat-card .number {
+      font-size: 28px;
+      font-weight: 700;
+      color: #2d6a35;
+      margin-bottom: 5px;
+    }
+    
+    .stat-card .label {
+      font-size: 12px;
+      color: #666;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 20px;
+      color: #666;
+    }
+    
+    .spinner {
+      display: inline-block;
+      width: 30px;
+      height: 30px;
+      border: 3px solid #e0e0e0;
+      border-top: 3px solid #6aab5e;
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    
+    @media print {
+      body {
+        background: white;
+        padding: 0;
+      }
+      .container {
+        box-shadow: none;
+        max-width: 100%;
+      }
+      .controls, .header, .instructions, .stats, .section h2 {
+        display: none;
+      }
+      .content {
+        padding: 10px;
+      }
+      .qr-grid {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+      }
+      .qr-card {
+        page-break-inside: avoid;
+        border: 1px solid #333;
+        padding: 10px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🌱 Product QR Codes</h1>
+      <p>Generate and print QR codes for your Nandini Crop Care products. Scan to view complete product details.</p>
+    </div>
+    
+    <div class="controls">
+      <button class="btn btn-primary" onclick="handlePrintAll()">
+        📄 Print All QR Codes
+      </button>
+      <button class="btn btn-secondary" onclick="handleDownloadCSV()">
+        📥 Download Reference (CSV)
+      </button>
+      <button class="btn btn-secondary" onclick="location.href='nag.html'">
+        ← Back to Main Page
+      </button>
+    </div>
+    
+    <div class="content">
+      <div class="section">
+        <h2>📊 QR Code Statistics</h2>
+        <div class="stats" id="stats">
+          <div class="stat-card">
+            <div class="number" id="total-products">0</div>
+            <div class="label">Total Products</div>
+          </div>
+          <div class="stat-card">
+            <div class="number" id="with-qr">0</div>
+            <div class="label">With QR Codes</div>
+          </div>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>📋 Instructions</h2>
+        <div class="instructions">
+          <h3>How to Use</h3>
+          <ol>
+            <li><strong>Print QR Codes:</strong> Click "Print All QR Codes" to open the print preview with all product QR codes</li>
+            <li><strong>Download Individual:</strong> Click the download icon on any QR code card to save it individually</li>
+            <li><strong>Scan:</strong> Use any smartphone camera or QR scanner to scan the code</li>
+            <li><strong>View Product:</strong> Scanning will redirect to the complete product detail page (update yoursite.com in products.js)</li>
+            <li><strong>Print Settings:</strong> 
+              <ul style="margin-top: 10px; margin-left: 20px;">
+                <li>Paper size: A4</li>
+                <li>Orientation: Portrait</li>
+                <li>Margins: 10mm</li>
+                <li>Colors: On (to ensure QR code readability)</li>
+              </ul>
+            </li>
+          </ol>
+        </div>
+      </div>
+      
+      <div class="section">
+        <h2>🎯 Product QR Codes</h2>
+        <div class="qr-grid" id="qr-grid">
+          <div class="loading">
+            <div class="spinner"></div>
+            <p>Loading QR codes...</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function() {
+      loadQRCodes();
+    });
+
+    function loadQRCodes() {
+      if (typeof PRODUCTS === 'undefined') {
+        console.error('PRODUCTS array not found');
+        document.getElementById('qr-grid').innerHTML = '<p style="color: red;">Error: Products data not loaded</p>';
+        return;
+      }
+
+      const grid = document.getElementById('qr-grid');
+      grid.innerHTML = '';
+
+      let totalProducts = 0;
+      let withQR = 0;
+
+      PRODUCTS.forEach(product => {
+        if (product.id && product.qrCode) {
+          totalProducts++;
+          withQR++;
+          
+          const card = createQRCard(product);
+          grid.appendChild(card);
+        }
+      });
+
+      // Update stats
+      document.getElementById('total-products').textContent = PRODUCTS.filter(p => p.id).length;
+      document.getElementById('with-qr').textContent = withQR;
+
+      if (withQR === 0) {
+        grid.innerHTML = '<p style="color: #999; grid-column: 1/-1;">No products with QR codes found. Update products.js first.</p>';
+      }
+    }
+
+    function createQRCard(product) {
+      const card = document.createElement('div');
+      card.className = 'qr-card';
+
+      const qrURL = getQRCodeURL(product.qrCode, 256);
+      const qrFileName = `qrcode-${product.id}.png`;
+
+      card.innerHTML = `
+        <img src="${qrURL}" alt="QR Code for ${product.name}">
+        <div class="product-name">${product.name}</div>
+        <div class="product-id">${product.id}</div>
+        <div class="qr-card-actions" style="font-size: 12px; color: #999; margin-bottom: 12px; padding: 0 5px;">
+          Redirects to: ${product.qrCode}
+        </div>
+      `;
+
+      return card;
+    }
+
+    function handlePrintAll() {
+      if (typeof PRODUCTS === 'undefined') {
+        alert('Products data not loaded');
+        return;
+      }
+      const activeProducts = PRODUCTS.filter(p => p.id && p.qrCode);
+      if (activeProducts.length === 0) {
+        alert('No products with QR codes to print');
+        return;
+      }
+      printAllQRCodes(activeProducts);
+    }
+
+    function handleDownloadCSV() {
+      if (typeof PRODUCTS === 'undefined') {
+        alert('Products data not loaded');
+        return;
+      }
+      const activeProducts = PRODUCTS.filter(p => p.id && p.qrCode);
+      if (activeProducts.length === 0) {
+        alert('No products with QR codes');
+        return;
+      }
+      downloadQRCodeCSV(activeProducts);
+    }
+  </script>
+</body>
+</html>
